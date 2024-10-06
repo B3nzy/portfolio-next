@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import { FaLinkedin } from "react-icons/fa";
 import { FaHackerrank } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const links = [
   { url: "/", title: "Home" },
@@ -17,6 +17,56 @@ const links = [
 export default function Navbar() {
   const path = usePathname();
   const [sidebarIsActive, setSidebarIsActive] = useState(false);
+
+  const topVariants = {
+    closed: {
+      rotation: 0,
+    },
+    opened: {
+      rotate: 45,
+      backgroundColor: "rgb(255,255,255)",
+    },
+  };
+
+  const centerVariants = {
+    closed: {
+      opacity: 1,
+    },
+    opened: {
+      opacity: 0,
+    },
+  };
+
+  const bottomVariants = {
+    closed: {
+      rotation: 0,
+    },
+    opened: {
+      rotate: -45,
+      backgroundColor: "rgb(255,255,255)",
+    },
+  };
+
+  const listVariants = {
+    closed: {
+      x: "100vw",
+      transition: {
+        delay: 3,
+      },
+    },
+    opened: {
+      x: 0,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const listItemVariants = {
+    closed: { opacity: 0, x: -50 },
+    opened: { opacity: 1, x: 0 },
+  };
 
   return (
     <div className="h-full flex justify-between items-center px-4 sm:p8-6 md:px-12 lg:px-20 xl:px-48 transition-all duration-300">
@@ -36,41 +86,47 @@ export default function Navbar() {
         className="md:hidden w-10 h-8 flex flex-col justify-between z-50 relative"
         onClick={() => setSidebarIsActive((prev) => !prev)}
       >
-        <div
-          className={`${
-            sidebarIsActive ? "bg-white" : "bg-black"
-          } w-10 h-1 bg-black rounded-lg`}
-        ></div>
-        <div
-          className={`${
-            sidebarIsActive ? "bg-white" : "bg-black"
-          } w-10 h-1 rounded-lg`}
-        ></div>
-        <div
-          className={`${
-            sidebarIsActive ? "bg-white" : "bg-black"
-          } w-10 h-1  rounded-lg`}
-        ></div>
+        <motion.div
+          variants={topVariants}
+          animate={sidebarIsActive ? "opened" : "closed"}
+          className={` w-10 h-1 bg-black rounded-lg origin-left`}
+        ></motion.div>
+        <motion.div
+          variants={centerVariants}
+          animate={sidebarIsActive ? "opened" : "closed"}
+          className={` w-10 h-1 bg-black rounded-lg`}
+        ></motion.div>
+        <motion.div
+          variants={bottomVariants}
+          animate={sidebarIsActive ? "opened" : "closed"}
+          className={` w-10 h-1 bg-black rounded-lg origin-left`}
+        ></motion.div>
       </button>
 
       {sidebarIsActive && (
-        <div className="fixed inset-0 w-screen h-screen bg-black text-white flex justify-center items-center flex-col gap-5 text-2xl">
+        <motion.div
+          variants={listVariants}
+          initial="closed"
+          animate="opened"
+          className="fixed inset-0 w-screen h-screen bg-black text-white flex justify-center items-center flex-col gap-10 text-2xl"
+        >
           {links.map((link) => {
             return (
-              <Link
-                className={`${
-                  path === link.url
-                    ? "bg-orange-700  px-8 rounded-full"
-                    : "px-4"
-                } py-2 `}
-                key={link.url}
-                href={link.url}
-              >
-                {link.title}
-              </Link>
+              <motion.div key={link.url} variants={listItemVariants}>
+                <Link
+                  className={`${
+                    path === link.url
+                      ? "bg-orange-700  px-8 rounded-full"
+                      : "px-4"
+                  } py-2 `}
+                  href={link.url}
+                >
+                  {link.title}
+                </Link>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       )}
 
       {/* Medium and above screen */}
