@@ -108,7 +108,7 @@ export default function Navbar() {
           variants={listVariants}
           initial="closed"
           animate="opened"
-          className="fixed inset-0 w-screen h-screen bg-black text-white flex justify-center items-center flex-col gap-10 text-2xl"
+          className="fixed inset-0 w-screen h-screen bg-black text-white flex justify-center items-center flex-col gap-10 text-2xl z-50"
         >
           {links.map((link) => {
             return (
@@ -118,7 +118,7 @@ export default function Navbar() {
                     path === link.url
                       ? "bg-orange-700  px-8 rounded-full"
                       : "px-4"
-                  } py-2 `}
+                  } py-2 z-40`}
                   href={link.url}
                 >
                   {link.title}
