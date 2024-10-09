@@ -83,7 +83,7 @@ export default function Navbar() {
       {/* Smaller screen */}
 
       <button
-        className="md:hidden w-10 h-8 flex flex-col justify-between z-50 relative"
+        className="md:hidden w-10 h-8 flex flex-col justify-between z-[60] relative"
         onClick={() => setSidebarIsActive((prev) => !prev)}
       >
         <motion.div
