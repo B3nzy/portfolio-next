@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { animate, motion } from "framer-motion";
+import React, { useRef } from "react";
+import { animate, motion, stagger, useInView } from "framer-motion";
 import Link from "next/link";
 
 const skills = [
@@ -76,6 +76,18 @@ const experiences = [
 ];
 
 export default function AboutPage() {
+  const skillRef = useRef();
+  const isSKillRefInView = useInView(skillRef);
+
+  const leftExperienceRef = useRef();
+  const isLeftExperienceRefInView = useInView(leftExperienceRef);
+
+  const rightExperienceRef = useRef();
+  const isRightExperienceRefInView = useInView(rightExperienceRef);
+
+  const mobileRightExperienceRef = useRef();
+  const isMobileRightExperienceRefInView = useInView(mobileRightExperienceRef);
+
   const jobDescriptionVariant = {
     initial: { x: "2vw", y: "0vh", opacity: 0 },
     animate: { x: "0vw", y: "0vh", opacity: 1 },
@@ -92,7 +104,7 @@ export default function AboutPage() {
         {/* Text Container */}
         <div className="p-4 sm:p-8 md:p-12 lg:-20 xl:p-48 flex flex-col gap-24 md:gap-32 lg:gap-48 xl:gap-64">
           {/* Biography Container */}
-          <div className="flex flex-col gap-12 justify-center">
+          <div className="flex flex-col gap-32 justify-center">
             <h1 className="font-bold text-2xl md:text-3xl">Biography</h1>
             <p className="text-lg">
               I’m a Full-Stack Developer with a passion for building scalable,
@@ -140,8 +152,15 @@ export default function AboutPage() {
             </motion.svg>
           </div>
           {/* Skills Contailer */}
-          <div className="flex flex-col gap-12 justify-center">
-            <h1 className="font-bold text-2xl md:text-3xl">Skills</h1>
+          <div className="flex flex-col gap-32 justify-center" ref={skillRef}>
+            <motion.h1
+              className="font-bold text-2xl md:text-3xl"
+              initial={{ x: "-300px" }}
+              animate={isSKillRefInView ? { x: 0 } : {}}
+              transition={{ delay: 0.2 }}
+            >
+              Skills
+            </motion.h1>
             <div className="flex flex-wrap gap-5">
               {skills.map((skill) => {
                 return (
@@ -194,34 +213,49 @@ export default function AboutPage() {
             </motion.svg>
           </div>
           {/* Experience Container */}
-          <div className="flex flex-col gap-12 justify-center">
+          <div className="flex flex-col gap-32 justify-center">
             <h1 className="font-bold text-2xl md:text-3xl">Experience</h1>
             {/* Experience List */}
             <div className="">
               {/* Experience List Item */}
+              {/* For large screen */}
               <div className=" hidden lg:flex flex-row gap-5">
                 {/* Left */}
-                <div className="flex flex-col gap-10">
+                <div className="flex flex-col gap-10" ref={leftExperienceRef}>
                   {experiences.map((item, index) => {
                     if (index % 2 == 0) {
                       return (
-                        <div
+                        <motion.div
+                          initial={{ x: "-100px" }}
+                          animate={isLeftExperienceRefInView ? { x: 0 } : {}}
+                          transition={{
+                            delay: 0.4 * (index + 1),
+                          }}
                           key={index}
-                          className="flex flex-col gap-2 xl:h-[250px] lg:h-[300px] border bg-white rounded p-2 justify-center"
+                          className="flex flex-col gap-2 xl:h-[250px] lg:h-[300px] border bg-white rounded p-2 justify-center shadow-xl"
                         >
-                          <div className="">{item.title}</div>
-                          <div>{item.company}</div>
-                          <div>{item.location}</div>
+                          <div className="text-xl text-slate-800">
+                            {item.title}
+                          </div>
+                          <div className="italic mb-5 text-slate-600">
+                            {item.company} - {item.location}
+                          </div>
                           <motion.div
-                            className="cursor-pointer"
+                            className={
+                              item.description.length > 150
+                                ? "cursor-pointer "
+                                : ""
+                            }
                             initial="initial"
                             animate="initial"
-                            whileHover="animate"
+                            whileHover={
+                              item.description.length > 150 ? "animate" : ""
+                            }
                           >
-                            {item.description.length > 100
+                            {item.description.length > 150
                               ? item.description.substring(
                                   0,
-                                  item.description.lastIndexOf(" ", 100)
+                                  item.description.lastIndexOf(" ", 150)
                                 ) + " ..."
                               : item.description}
                             <motion.div
@@ -231,12 +265,15 @@ export default function AboutPage() {
                               {item.description}
                             </motion.div>
                           </motion.div>
-                          <div>{item.techStack}</div>
-                        </div>
+                          <div className="italic">{item.techStack}</div>
+                        </motion.div>
                       );
                     } else {
                       return (
-                        <div className="flex justify-end xl:h-[250px] lg:h-[300px] italic">
+                        <div
+                          key={index}
+                          className="flex justify-end xl:h-[250px] lg:h-[300px] italic"
+                        >
                           {item.date}
                         </div>
                       );
@@ -251,34 +288,48 @@ export default function AboutPage() {
                         key={index}
                         className="flex flex-col items-center gap-2"
                       >
-                        <div className="w-4 h-4 rounded-full bg-white ring-4 ring-red-700"></div>
-                        <div className="xl:h-[260px] lg:h-[310px] w-1 bg-orange-500"></div>
+                        <div className="w-4 h-4 rounded-full bg-white ring-4 ring-orange-500"></div>
+                        <div className="xl:h-[260px] lg:h-[310px] w-[2px] bg-black"></div>
                       </div>
                     );
                   })}
                 </div>
                 {/* Right */}
-                <div className="flex flex-col gap-10">
+                <div className="flex flex-col gap-10" ref={rightExperienceRef}>
                   {experiences.map((item, index) => {
                     if (index % 2 == 1) {
                       return (
-                        <div
+                        <motion.div
+                          initial={{ x: "100px" }}
+                          animate={isRightExperienceRefInView ? { x: 0 } : {}}
+                          transition={{
+                            delay: 0.4 * (index + 1),
+                          }}
                           key={index}
-                          className="flex flex-col gap-2 lg:h-[300px] xl:h-[250px] border bg-white rounded p-2 justify-center"
+                          className="flex flex-col gap-2 lg:h-[300px] xl:h-[250px] border bg-white rounded p-2 justify-center shadow-xl"
                         >
-                          <div className="">{item.title}</div>
-                          <div>{item.company}</div>
-                          <div>{item.location}</div>
+                          <div className="text-xl text-slate-800">
+                            {item.title}
+                          </div>
+                          <div className="italic mb-5 text-slate-600">
+                            {item.company} - {item.location}
+                          </div>
                           <motion.div
-                            className="cursor-pointer"
+                            className={
+                              item.description.length > 150
+                                ? "cursor-pointer "
+                                : ""
+                            }
                             initial="initial"
                             animate="initial"
-                            whileHover="animate"
+                            whileHover={
+                              item.description.length > 150 ? "animate" : ""
+                            }
                           >
-                            {item.description.length > 100
+                            {item.description.length > 150
                               ? item.description.substring(
                                   0,
-                                  item.description.lastIndexOf(" ", 100)
+                                  item.description.lastIndexOf(" ", 150)
                                 ) + " ..."
                               : item.description}
                             <motion.div
@@ -288,16 +339,92 @@ export default function AboutPage() {
                               {item.description}
                             </motion.div>
                           </motion.div>
-                          <div>{item.techStack}</div>
-                        </div>
+                          <div className="italic">{item.techStack}</div>
+                        </motion.div>
                       );
                     } else {
                       return (
-                        <div className="flex justify-start lg:h-[300px] xl:h-[250px] italic">
+                        <div
+                          key={index}
+                          className="flex justify-start lg:h-[300px] xl:h-[250px] italic"
+                        >
                           {item.date}
                         </div>
                       );
                     }
+                  })}
+                </div>
+              </div>
+
+              {/* For Small Screen */}
+              <div className="flex lg:hidden flex-row gap-4">
+                {/* Left */}
+                <div className="flex flex-col gap-2">
+                  {experiences.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center gap-2"
+                      >
+                        <div className="w-4 h-4 rounded-full bg-white ring-4 ring-orange-500"></div>
+                        <div className="h-[360px] w-[2px] bg-black"></div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Right */}
+                <div
+                  className="flex flex-col gap-10"
+                  ref={mobileRightExperienceRef}
+                >
+                  {experiences.map((item, index) => {
+                    return (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={
+                          isMobileRightExperienceRefInView ? { opacity: 1 } : {}
+                        }
+                        transition={{
+                          delay: 0.4 * (index + 1),
+                        }}
+                        key={index}
+                        className="flex flex-col gap-2 h-[350px]  border bg-white rounded p-2 justify-center shadow-xl"
+                      >
+                        <div className="text-xl text-slate-800">
+                          {item.title}
+                        </div>
+                        <div className="italic mb-5 text-slate-600">
+                          {item.company} - {item.location}
+                        </div>
+                        <motion.div
+                          className={
+                            item.description.length > 150
+                              ? "cursor-pointer "
+                              : ""
+                          }
+                          initial="initial"
+                          animate="initial"
+                          whileTap={
+                            item.description.length > 150 ? "animate" : ""
+                          }
+                        >
+                          {item.description.length > 150
+                            ? item.description.substring(
+                                0,
+                                item.description.lastIndexOf(" ", 150)
+                              ) + " ..."
+                            : item.description}
+                          <motion.div
+                            className="z-20 absolute p-2 font-mono font-light italic  w-[350px] md:w-[400px] bg-gradient-to-b from-blue-50 to-orange-50 shadow-2xl"
+                            variants={jobDescriptionVariant}
+                          >
+                            {item.description}
+                          </motion.div>
+                        </motion.div>
+                        <div className="italic mb-2">{item.techStack}</div>
+                        <div className="italic text-slate-600">{item.date}</div>
+                      </motion.div>
+                    );
                   })}
                 </div>
               </div>
@@ -338,7 +465,7 @@ export default function AboutPage() {
             </motion.svg>
           </div>
           {/* Education Container */}
-          <div className="flex flex-col gap-12 justify-center ">
+          <div className="flex flex-col gap-32 justify-center ">
             <h1 className="font-bold text-2xl md:text-3xl">Education</h1>
 
             {/* Scroll SVG */}
