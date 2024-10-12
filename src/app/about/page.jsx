@@ -1,7 +1,6 @@
 "use client";
-import React, { useRef } from "react";
-import { animate, motion, stagger, useInView } from "framer-motion";
-import Link from "next/link";
+import React from "react";
+import { motion } from "framer-motion";
 
 const skills = [
   "JavaScript",
@@ -76,18 +75,6 @@ const experiences = [
 ];
 
 export default function AboutPage() {
-  const skillRef = useRef();
-  const isSKillRefInView = useInView(skillRef);
-
-  const leftExperienceRef = useRef();
-  const isLeftExperienceRefInView = useInView(leftExperienceRef);
-
-  const rightExperienceRef = useRef();
-  const isRightExperienceRefInView = useInView(rightExperienceRef);
-
-  const mobileRightExperienceRef = useRef();
-  const isMobileRightExperienceRefInView = useInView(mobileRightExperienceRef);
-
   const jobDescriptionVariant = {
     initial: { x: "2vw", y: "0vh", opacity: 0 },
     animate: { x: "0vw", y: "0vh", opacity: 1 },
@@ -152,11 +139,11 @@ export default function AboutPage() {
             </motion.svg>
           </div>
           {/* Skills Contailer */}
-          <div className="flex flex-col gap-32 justify-center" ref={skillRef}>
+          <div className="flex flex-col gap-32 justify-center">
             <motion.h1
               className="font-bold text-2xl md:text-3xl"
               initial={{ x: "-300px" }}
-              animate={isSKillRefInView ? { x: 0 } : {}}
+              whileInView={{ x: 0 }}
               transition={{ delay: 0.2 }}
             >
               Skills
@@ -221,15 +208,15 @@ export default function AboutPage() {
               {/* For large screen */}
               <div className=" hidden lg:flex flex-row gap-5">
                 {/* Left */}
-                <div className="flex flex-col gap-10" ref={leftExperienceRef}>
+                <div className="flex flex-col gap-10">
                   {experiences.map((item, index) => {
                     if (index % 2 == 0) {
                       return (
                         <motion.div
                           initial={{ x: "-100px" }}
-                          animate={isLeftExperienceRefInView ? { x: 0 } : {}}
+                          whileInView={{ x: 0 }}
                           transition={{
-                            delay: 0.4 * (index + 1),
+                            delay: 0.4 + (index + 1) / 5,
                           }}
                           key={index}
                           className="flex flex-col gap-2 xl:h-[250px] lg:h-[300px] border bg-white rounded p-2 justify-center shadow-xl"
@@ -295,15 +282,15 @@ export default function AboutPage() {
                   })}
                 </div>
                 {/* Right */}
-                <div className="flex flex-col gap-10" ref={rightExperienceRef}>
+                <div className="flex flex-col gap-10">
                   {experiences.map((item, index) => {
                     if (index % 2 == 1) {
                       return (
                         <motion.div
                           initial={{ x: "100px" }}
-                          animate={isRightExperienceRefInView ? { x: 0 } : {}}
+                          whileInView={{ x: 0 }}
                           transition={{
-                            delay: 0.4 * (index + 1),
+                            delay: 0.4 + (index + 1) / 5,
                           }}
                           key={index}
                           className="flex flex-col gap-2 lg:h-[300px] xl:h-[250px] border bg-white rounded p-2 justify-center shadow-xl"
@@ -373,19 +360,14 @@ export default function AboutPage() {
                   })}
                 </div>
                 {/* Right */}
-                <div
-                  className="flex flex-col gap-10"
-                  ref={mobileRightExperienceRef}
-                >
+                <div className="flex flex-col gap-10">
                   {experiences.map((item, index) => {
                     return (
                       <motion.div
                         initial={{ opacity: 0 }}
-                        animate={
-                          isMobileRightExperienceRefInView ? { opacity: 1 } : {}
-                        }
+                        whileInView={{ opacity: 1 }}
                         transition={{
-                          delay: 0.4 * (index + 1),
+                          delay: 0.3 + (index + 1) / 5,
                         }}
                         key={index}
                         className="flex flex-col gap-2 h-[350px]  border bg-white rounded p-2 justify-center shadow-xl"
