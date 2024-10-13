@@ -5,6 +5,21 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export default function Home() {
+  const welcomeText = "Hi, I'm Sumit.";
+
+  const introductionSentenceVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 1 },
+    },
+  };
+
+  const introductionLetterVarints = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { opacity: { duration: 0 } } },
+  };
+
   return (
     <motion.div
       className="h-full"
@@ -25,9 +40,20 @@ export default function Home() {
         </div>
         {/* Text Container */}
         <div className="w-full p-5 xl:p-0 flex flex-col gap-5">
-          <h1 className="text-4xl lg:text-5xl font-mono font-semibold">
-            Hi, I&apos;m Sumit
-          </h1>
+          <motion.h1
+            className="text-4xl lg:text-5xl font-mono font-semibold"
+            initial="hidden"
+            animate="visible"
+            variants={introductionSentenceVariants}
+          >
+            {welcomeText.split("").map((char, index) => {
+              return (
+                <motion.span key={index} variants={introductionLetterVarints}>
+                  {char}
+                </motion.span>
+              );
+            })}
+          </motion.h1>
           <p className="text-xl">
             A passionate Full-Stack Developer with a focus on building dynamic
             and user-friendly web applications. With a deep understanding of

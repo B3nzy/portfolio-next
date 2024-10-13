@@ -42,6 +42,7 @@ const skills = [
 ];
 
 // Add new Experieces at the top of this list
+// Forgot to add links here.
 const experiences = [
   {
     title: "Trainee Engineer",
@@ -74,10 +75,65 @@ const experiences = [
   },
 ];
 
+const educations = [
+  {
+    degree: "Post Graduate Diploma in Advanced Computing (PG-DAC)",
+    school: "Institute for Advanced Computing & Software Development",
+    grade: "87.5% (A+)",
+    date: "Sep 2023 - Mar 2024",
+    location: "Pune, India",
+  },
+  {
+    degree: "Bachelor of Technology (B.Tech)",
+    school: "Govt. College Of Engineering & Ceramic Technology",
+    grade: "CGPA: 9.73",
+    date: "Aug 2019 - May 2023",
+    location: "Kolkata, India",
+  },
+  {
+    degree: "West Bengal Council of Higher Secondary Education",
+    school: "Bishnupur High School",
+    grade: "73.2%",
+    date: "2012 - 2014",
+    location: "Bishnupur, India",
+  },
+  {
+    degree: "West Bengal Board of Secondary Education",
+    school: "Bishnupur High School",
+    grade: "79.4%",
+    date: "2010 - 2012",
+    location: "Bishnupur, India",
+  },
+];
+
 export default function AboutPage() {
   const jobDescriptionVariant = {
     initial: { x: "2vw", y: "0vh", opacity: 0 },
     animate: { x: "0vw", y: "0vh", opacity: 1 },
+  };
+
+  const experienceVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+    },
+  };
+
+  const educationVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+    },
+  };
+
+  const leftTileVarant = {
+    initial: { x: "-100px" },
+    animate: { x: 0 },
+  };
+
+  const rightTileVarant = {
+    initial: { x: "100px" },
+    animate: { x: 0 },
   };
 
   return (
@@ -201,27 +257,38 @@ export default function AboutPage() {
           </div>
           {/* Experience Container */}
           <div className="flex flex-col gap-32 justify-center">
-            <h1 className="font-bold text-2xl md:text-3xl">Experience</h1>
+            <motion.h1
+              className="font-bold text-2xl md:text-5xl flex justify-center"
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              Working Experience
+            </motion.h1>
             {/* Experience List */}
             <div className="">
               {/* Experience List Item */}
               {/* For large screen */}
               <div className=" hidden lg:flex flex-row gap-5">
                 {/* Left */}
-                <div className="flex flex-col gap-10">
+                <motion.div
+                  className="flex flex-col gap-10 w-full"
+                  initial="initial"
+                  whileInView="animate"
+                  variants={experienceVariants}
+                >
                   {experiences.map((item, index) => {
                     if (index % 2 == 0) {
                       return (
                         <motion.div
-                          initial={{ x: "-100px" }}
-                          whileInView={{ x: 0 }}
                           transition={{
                             delay: 0.4 + (index + 1) / 5,
                           }}
+                          variants={leftTileVarant}
                           key={index}
                           className="flex flex-col gap-2 xl:h-[250px] lg:h-[300px] border bg-white rounded p-2 justify-center shadow-xl"
                         >
-                          <div className="text-xl text-slate-800">
+                          <div className="text-xl text-slate-800 font-semibold">
                             {item.title}
                           </div>
                           <div className="italic mb-5 text-slate-600">
@@ -259,14 +326,14 @@ export default function AboutPage() {
                       return (
                         <div
                           key={index}
-                          className="flex justify-end xl:h-[250px] lg:h-[300px] italic"
+                          className="flex justify-end xl:h-[250px] lg:h-[300px] italic font-semibold text-orange-700"
                         >
                           {item.date}
                         </div>
                       );
                     }
                   })}
-                </div>
+                </motion.div>
                 {/* Center */}
                 <div className="flex flex-col gap-2">
                   {experiences.map((item, index) => {
@@ -282,20 +349,24 @@ export default function AboutPage() {
                   })}
                 </div>
                 {/* Right */}
-                <div className="flex flex-col gap-10">
+                <motion.div
+                  className="flex flex-col gap-10 w-full"
+                  initial="initial"
+                  whileInView="animate"
+                  variants={experienceVariants}
+                >
                   {experiences.map((item, index) => {
                     if (index % 2 == 1) {
                       return (
                         <motion.div
-                          initial={{ x: "100px" }}
-                          whileInView={{ x: 0 }}
                           transition={{
                             delay: 0.4 + (index + 1) / 5,
                           }}
+                          variants={rightTileVarant}
                           key={index}
                           className="flex flex-col gap-2 lg:h-[300px] xl:h-[250px] border bg-white rounded p-2 justify-center shadow-xl"
                         >
-                          <div className="text-xl text-slate-800">
+                          <div className="text-xl text-slate-800 font-semibold">
                             {item.title}
                           </div>
                           <div className="italic mb-5 text-slate-600">
@@ -333,14 +404,14 @@ export default function AboutPage() {
                       return (
                         <div
                           key={index}
-                          className="flex justify-start lg:h-[300px] xl:h-[250px] italic"
+                          className="flex justify-start lg:h-[300px] xl:h-[250px] italic font-semibold text-orange-700"
                         >
                           {item.date}
                         </div>
                       );
                     }
                   })}
-                </div>
+                </motion.div>
               </div>
 
               {/* For Small Screen */}
@@ -448,42 +519,120 @@ export default function AboutPage() {
           </div>
           {/* Education Container */}
           <div className="flex flex-col gap-32 justify-center ">
-            <h1 className="font-bold text-2xl md:text-3xl">Education</h1>
-
-            {/* Scroll SVG */}
-            <motion.svg
-              initial={{ opacity: 0.2, y: 0 }}
-              animate={{ opacity: 1, y: "10px" }}
-              transition={{
-                repeat: Infinity,
-                duration: 2.5,
-                ease: "easeInOut",
-              }}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              width={50}
-              height={50}
+            <motion.h1
+              className="font-bold text-2xl md:text-5xl flex justify-center"
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
-              <path
-                d="M5 15C5 16.8565 5.73754 18.6371 7.05029 19.9498C8.36305 21.2626 10.1435 21.9999 12 21.9999C13.8565 21.9999 15.637 21.2626 16.9498 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9498 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36305 2.73754 7.05029 4.05029C5.73754 5.36305 5 7.14348 5 9V15Z"
-                stroke="#000000"
-                strokeWidth="1"
-                className="stroke-orange-700"
-              ></path>
-              <path
-                d="M12 6V14"
-                stroke="#000000"
-                strokeWidth="1"
-                className="stroke-orange-700"
-              ></path>
-              <path
-                d="M15 11L12 14L9 11"
-                stroke="#000000"
-                strokeWidth="1"
-                className="stroke-orange-700"
-              ></path>
-            </motion.svg>
+              Education History
+            </motion.h1>
+
+            {/* Education List */}
+            <div className="">
+              {/* Education List Item */}
+              {/* For large screen */}
+              <div className=" hidden lg:flex flex-row gap-5">
+                {/* Left */}
+                <motion.div
+                  className="flex flex-col gap-10 w-full"
+                  initial="initial"
+                  whileInView="animate"
+                  variants={educationVariants}
+                >
+                  {educations.map((item, index) => {
+                    if (index % 2 == 0) {
+                      return (
+                        <motion.div
+                          transition={{
+                            delay: 0.4 + (index + 1) / 5,
+                          }}
+                          variants={leftTileVarant}
+                          key={index}
+                          className="flex flex-col gap-2 lg:h-[200px] border bg-white rounded p-2 justify-center shadow-xl"
+                        >
+                          <div className="text-xl text-slate-800 font-semibold">
+                            {item.degree}
+                          </div>
+                          <div className="italic mb-1 text-slate-600">
+                            {item.school}
+                          </div>
+                          <div className="mb-1">Grade: {item.grade}</div>
+                          <div className="italic mb-5 text-slate-600">
+                            {item.location}
+                          </div>
+                        </motion.div>
+                      );
+                    } else {
+                      return (
+                        <div
+                          key={index}
+                          className="flex justify-end lg:h-[200px] italic font-semibold text-orange-700"
+                        >
+                          {item.date}
+                        </div>
+                      );
+                    }
+                  })}
+                </motion.div>
+                {/* Center */}
+                <div className="flex flex-col gap-2">
+                  {educations.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center gap-2"
+                      >
+                        <div className="w-4 h-4 rounded-full bg-white ring-4 ring-orange-500"></div>
+                        <div className="lg:h-[208px] w-[2px] bg-black"></div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Right */}
+                <motion.div
+                  className="flex flex-col gap-10 w-full"
+                  initial="initial"
+                  whileInView="animate"
+                  variants={educationVariants}
+                >
+                  {educations.map((item, index) => {
+                    if (index % 2 == 1) {
+                      return (
+                        <motion.div
+                          transition={{
+                            delay: 0.4 + (index + 1) / 5,
+                          }}
+                          variants={rightTileVarant}
+                          key={index}
+                          className="flex flex-col gap-2 lg:h-[200px] border bg-white rounded p-2 justify-center shadow-xl"
+                        >
+                          <div className="text-xl text-slate-800 font-semibold">
+                            {item.degree}
+                          </div>
+                          <div className="italic mb-1 text-slate-600">
+                            {item.school}
+                          </div>
+                          <div className="mb-1">Grade: {item.grade}</div>
+                          <div className="italic mb-5 text-slate-600">
+                            {item.location}
+                          </div>
+                        </motion.div>
+                      );
+                    } else {
+                      return (
+                        <div
+                          key={index}
+                          className="flex justify-start lg:h-[200px] italic font-semibold text-orange-700"
+                        >
+                          {item.date}
+                        </div>
+                      );
+                    }
+                  })}
+                </motion.div>
+              </div>
+            </div>
           </div>
         </div>
         {/* SVG Container */}
