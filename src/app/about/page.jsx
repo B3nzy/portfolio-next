@@ -632,6 +632,52 @@ export default function AboutPage() {
                   })}
                 </motion.div>
               </div>
+
+              {/* For Small Screen */}
+              <div className="flex lg:hidden flex-row gap-4">
+                {/* Left */}
+                <div className="flex flex-col gap-2">
+                  {educations.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center gap-2"
+                      >
+                        <div className="w-4 h-4 rounded-full bg-white ring-4 ring-orange-500"></div>
+                        <div className="sm:h-[208px] h-[228px] w-[2px] bg-black"></div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Right */}
+                <div className="flex flex-col gap-10">
+                  {educations.map((item, index) => {
+                    return (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{
+                          delay: 0.2 + (index + 1) / 5,
+                        }}
+                        key={index}
+                        className="flex flex-col gap-2 sm:h-[200px] h-[220px] border bg-white rounded p-2 justify-center shadow-xl"
+                      >
+                        <div className="text-xl text-slate-800 font-semibold">
+                          {item.degree}
+                        </div>
+                        <div className="italic mb-1 text-slate-600">
+                          {item.school}
+                        </div>
+                        <div className="mb-1">Grade: {item.grade}</div>
+                        <div className="italic  text-slate-600">
+                          {item.location}
+                        </div>
+                        <div className="italic text-slate-600">{item.date}</div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
