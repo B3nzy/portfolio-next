@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const skills = [
   "JavaScript",
@@ -42,11 +43,11 @@ const skills = [
 ];
 
 // Add new Experieces at the top of this list
-// Add links here for companies in the array.
 const experiences = [
   {
     title: "Trainee Engineer",
     company: "Xplor Technologies",
+    companyLink: "https://www.xplortechnologies.com/",
     description:
       "I specialize in the Payment domain at Xplor Technology,focusing on new development projects and managing support tickets to ensure optimal performance of our payment systems.",
     techStack: "Stack : .NET Core",
@@ -57,6 +58,7 @@ const experiences = [
   {
     title: "Backend Developer",
     company: "Dey Technologies (TaxEve)",
+    companyLink: "https://taxeve.com/",
     description:
       "Developed a product called TaxEve, where users can e-file 1099 forms. I was handling the backend of the TaxEve app, which contains the Authentication, the Service, Payment system (Stripe), Admin panel and Deployment (AWS).",
     techStack: "Stack : Node.js, Express, MongoDB, Mongoose, Stripe, AWS",
@@ -67,6 +69,7 @@ const experiences = [
   {
     title: "Software Developer Trainee",
     company: "Gamut Infosystems Ltd. (Farvision)",
+    companyLink: "https://www.farvisionerp.com/",
     description:
       "Farvision is a cloud-based ERP software for real estate in India, and I was working in Farvision 4.5 developement team.",
     techStack: "Stack : Angular, C#, .NET, MsSQL",
@@ -76,11 +79,11 @@ const experiences = [
 ];
 
 // Add new Education at the top of this list
-// Add links here for school in the array.
 const educations = [
   {
     degree: "Post Graduate Diploma in Advanced Computing (PG-DAC)",
     school: "Institute for Advanced Computing & Software Development",
+    schoolLink: "https://iacsd.com/",
     grade: "87.5% (A+)",
     date: "Sep 2023 - Mar 2024",
     location: "Pune, India",
@@ -88,6 +91,7 @@ const educations = [
   {
     degree: "Bachelor of Technology (B.Tech)",
     school: "Govt. College Of Engineering & Ceramic Technology",
+    schoolLink: "https://gcect.ac.in/",
     grade: "CGPA: 9.73",
     date: "Aug 2019 - May 2023",
     location: "Kolkata, India",
@@ -95,6 +99,7 @@ const educations = [
   {
     degree: "West Bengal Council of Higher Secondary Education",
     school: "Bishnupur High School",
+    schoolLink: "https://bhsbankura.in/",
     grade: "73.2%",
     date: "2012 - 2014",
     location: "Bishnupur, India",
@@ -102,6 +107,7 @@ const educations = [
   {
     degree: "West Bengal Board of Secondary Education",
     school: "Bishnupur High School",
+    schoolLink: "https://bhsbankura.in/",
     grade: "79.4%",
     date: "2010 - 2012",
     location: "Bishnupur, India",
@@ -294,7 +300,10 @@ export default function AboutPage() {
                             {item.title}
                           </div>
                           <div className="italic mb-5 text-slate-600">
-                            {item.company} - {item.location}
+                            <Link href={item.companyLink} target="_blank">
+                              {item.company}
+                            </Link>{" "}
+                            - {item.location}
                           </div>
                           <motion.div
                             className={
@@ -372,7 +381,10 @@ export default function AboutPage() {
                             {item.title}
                           </div>
                           <div className="italic mb-5 text-slate-600">
-                            {item.company} - {item.location}
+                            <Link href={item.companyLink} target="_blank">
+                              {item.company}
+                            </Link>{" "}
+                            - {item.location}
                           </div>
                           <motion.div
                             className={
@@ -449,7 +461,10 @@ export default function AboutPage() {
                           {item.title}
                         </div>
                         <div className="italic mb-5 text-slate-600">
-                          {item.company} - {item.location}
+                          <Link href={item.companyLink} target="_blank">
+                            {item.company}
+                          </Link>{" "}
+                          - {item.location}
                         </div>
                         <motion.div
                           className={
@@ -557,7 +572,9 @@ export default function AboutPage() {
                             {item.degree}
                           </div>
                           <div className="italic mb-1 text-slate-600">
-                            {item.school}
+                            <Link href={item.schoolLink} target="_blank">
+                              {item.school}
+                            </Link>
                           </div>
                           <div className="mb-1">Grade: {item.grade}</div>
                           <div className="italic mb-5 text-slate-600">
@@ -613,7 +630,9 @@ export default function AboutPage() {
                             {item.degree}
                           </div>
                           <div className="italic mb-1 text-slate-600">
-                            {item.school}
+                            <Link href={item.schoolLink} target="_blank">
+                              {item.school}
+                            </Link>
                           </div>
                           <div className="mb-1">Grade: {item.grade}</div>
                           <div className="italic mb-5 text-slate-600">
@@ -668,7 +687,9 @@ export default function AboutPage() {
                           {item.degree}
                         </div>
                         <div className="italic mb-1 text-slate-600">
-                          {item.school}
+                          <Link href={item.schoolLink} target="_blank">
+                            {item.school}
+                          </Link>
                         </div>
                         <div className="mb-1">Grade: {item.grade}</div>
                         <div className="italic  text-slate-600">
