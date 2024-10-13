@@ -42,7 +42,7 @@ const skills = [
 ];
 
 // Add new Experieces at the top of this list
-// Forgot to add links here.
+// Add links here for companies in the array.
 const experiences = [
   {
     title: "Trainee Engineer",
@@ -75,6 +75,8 @@ const experiences = [
   },
 ];
 
+// Add new Education at the top of this list
+// Add links here for school in the array.
 const educations = [
   {
     degree: "Post Graduate Diploma in Advanced Computing (PG-DAC)",
