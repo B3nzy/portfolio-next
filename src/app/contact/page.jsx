@@ -9,6 +9,8 @@ export default function ContactPage() {
 
   const leftText = "Connect with me";
 
+  // TODO: Email functionality not yet added.
+
   return (
     <motion.div
       className="h-full"
